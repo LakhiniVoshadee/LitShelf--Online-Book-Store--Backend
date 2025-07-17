@@ -1,0 +1,20 @@
+{
+  "name": "online-library-system-lakhini",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LakhiniVoshadee/Online-Library-System-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LakhiniVoshadee/Online-Library-System-Backend/issues"
+  },
+  "homepage": "https://github.com/LakhiniVoshadee/Online-Library-System-Backend#readme",
+  "description": ""
+}
