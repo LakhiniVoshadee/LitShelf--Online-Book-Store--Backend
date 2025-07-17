@@ -9,6 +9,4 @@ const allowedOrigins = [
 ];
 
 
-
-
 export default app;
