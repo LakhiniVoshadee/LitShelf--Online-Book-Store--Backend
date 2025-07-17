@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const reviewModel = new mongoose.Schema(
+const wishlistModel = new mongoose.Schema(
     {
         id: {
             required: true,
@@ -11,22 +11,14 @@ const reviewModel = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: true,
+            unique: true,
         },
-        book: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Book',
-            required: true,
-        },
-        rating: {
-            required: true,
-            type: Number,
-            min: 1,
-            max: 5,
-        },
-        comment: {
-            required: true,
-            type: String,
-        },
+        books: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Book',
+            },
+        ],
         createdAt: {
             type: Date,
             default: Date.now,
@@ -38,6 +30,6 @@ const reviewModel = new mongoose.Schema(
     }
 );
 
-const Review = mongoose.model('Review', reviewModel);
+const Wishlist = mongoose.model('Wishlist', wishlistModel);
 
-export default Review;
+export default Wishlist;

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const reviewModel = new mongoose.Schema(
+const preOrderModel = new mongoose.Schema(
     {
         id: {
             required: true,
@@ -17,15 +17,11 @@ const reviewModel = new mongoose.Schema(
             ref: 'Book',
             required: true,
         },
-        rating: {
-            required: true,
-            type: Number,
-            min: 1,
-            max: 5,
-        },
-        comment: {
+        status: {
             required: true,
             type: String,
+            enum: ['pending', 'fulfilled'],
+            default: 'pending',
         },
         createdAt: {
             type: Date,
@@ -38,6 +34,6 @@ const reviewModel = new mongoose.Schema(
     }
 );
 
-const Review = mongoose.model('Review', reviewModel);
+const PreOrder = mongoose.model('PreOrder', preOrderModel);
 
-export default Review;
+export default PreOrder;
