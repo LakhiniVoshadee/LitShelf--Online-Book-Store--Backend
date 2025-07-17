@@ -1,9 +1,8 @@
-export interface ReviewDto {
+export interface PreOrderDto {
     id: number;
     user: string; // ObjectId as string
     book: string; // ObjectId as string
-    rating: number;
-    comment: string;
+    status: 'pending' | 'fulfilled';
     createdAt: Date;
     updatedAt: Date;
 }
