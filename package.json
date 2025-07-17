@@ -16,5 +16,8 @@
     "url": "https://github.com/LakhiniVoshadee/Online-Library-System-Backend/issues"
   },
   "homepage": "https://github.com/LakhiniVoshadee/Online-Library-System-Backend#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
