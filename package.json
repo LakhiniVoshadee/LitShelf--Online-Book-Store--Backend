@@ -20,6 +20,7 @@
   "homepage": "https://github.com/LakhiniVoshadee/Online-Library-System-Backend#readme",
   "description": "",
   "dependencies": {
+    "dotenv": "^17.2.0",
     "express": "^5.1.0"
   },
   "devDependencies": {
