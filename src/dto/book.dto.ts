@@ -4,10 +4,7 @@ export interface BookDto {
     author: string;
     genre: string;
     price: number;
-    stock: number;
-    description: string;
-    coverImage?: string;
-    publishedDate?: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    currency: string;
+    coverImage: string;
+
 }

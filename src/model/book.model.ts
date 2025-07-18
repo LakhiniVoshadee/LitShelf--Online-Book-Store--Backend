@@ -24,29 +24,16 @@ const bookModel = new mongoose.Schema(
             required: true,
             type: Number,
         },
-        "stock": {
-            required: true,
-            type: Number,
-            default: 0,
-        },
-        "description": {
+        "currency": {
             required: true,
             type: String,
         },
+
         "coverImage": {
+            required: true,
             type: String,
-        },
-        "publishedDate": {
-            type: Date,
-        },
-        "createdAt": {
-            type: Date,
-            default: Date.now,
-        },
-        "updatedAt": {
-            type: Date,
-            default: Date.now,
-        },
+        }
+
     }
 );
 
