@@ -14,7 +14,7 @@ export const getAllBooks = async (req: Request, res: Response) => {
 
 export const saveBook = async (req: Request, res: Response) => {
 
-    try{
+    try {
         const newBook = req.body;
         const validationError = bookService.validateBook(newBook);
         if (validationError) {
@@ -24,9 +24,23 @@ export const saveBook = async (req: Request, res: Response) => {
         const savedBook = await bookService.saveBook(newBook);
         res.status(201).json(savedBook);
 
-    } catch (error){
+    } catch (error) {
         console.log(error)
         res.status(500).json({error: "Something went wrong"});
     }
 
+}
+
+export const getBook = async (req: Request, res: Response) => {
+    const bookId = parseInt(req.params.id);
+    if (isNaN(bookId)) {
+        res.status(400).json({error: "Invalid book id"});
+        return;
+    }
+    const book = await bookService.getBook(bookId);
+    if (!book) {
+        res.status(404).json({error: "Book not found"});
+        return;
+    }
+    res.status(200).json(book);
 }
