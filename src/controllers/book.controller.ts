@@ -13,12 +13,19 @@ export const getAllBooks = async (req: Request, res: Response) => {
 }
 
 export const saveBook = async (req: Request, res: Response) => {
-    // without validation
+
     try{
-        const book = await bookService.saveBook(req.body);
-        res.status(200).json(book);
+        const newBook = req.body;
+        const validationError = bookService.validateBook(newBook);
+        if (validationError) {
+            res.status(400).json({error: validationError});
+            return;
+        }
+        const savedBook = await bookService.saveBook(newBook);
+        res.status(201).json(savedBook);
 
     } catch (error){
+        console.log(error)
         res.status(500).json({error: "Something went wrong"});
     }
 

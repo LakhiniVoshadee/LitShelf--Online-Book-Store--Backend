@@ -9,11 +9,9 @@ export const saveBook = async (book: BookDto) => {
     return Book.create(book);
 };
 
-/*
-export const validateBook = async (book: BookDto) => {
-    if (!book.id || !book.title) {
-        return "Title, author, genre, price, and currency are required";
+export const validateBook = (book: BookDto) => {
+    if (!book.id || !book.title || !book.author || !book.genre || !book.price || !book.currency || !book.coverImage || !book.publicationYear || !book.publisher || !book.description || !book.pages || !book.language || !book.stock) {
+        return 'All fields are required';
     }
-    // Allow coverImage to be an empty string or undefined
     return null;
-};*/
+}
