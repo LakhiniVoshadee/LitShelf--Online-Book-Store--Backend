@@ -4,7 +4,7 @@ import DBConnection from "./db/DBConnection";
 
 dotenv.config();
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 DBConnection().then(result => console.log(result));
 
