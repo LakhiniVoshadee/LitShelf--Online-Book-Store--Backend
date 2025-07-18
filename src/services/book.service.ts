@@ -1,5 +1,5 @@
 import Book from "../model/book.model";
-import { BookDto } from "../dto/book.dto";
+import {BookDto} from "../dto/book.dto";
 
 export const getAllBooks = async (): Promise<BookDto[]> => {
     return Book.find();
@@ -10,7 +10,22 @@ export const saveBook = async (book: BookDto) => {
 };
 
 export const getBook = async (id: number): Promise<any> => {
-    return Book.findOne({ id: id });
+    return Book.findOne({id: id});
+}
+
+export const updateBook = async (id: number, data: BookDto) => {
+
+    const book = await Book.findOneAndUpdate({id: id}, data, {new: true});
+
+    if (!book) {
+        return null;
+    }
+    return book;
+}
+
+export const deleteBook = async (id: number) => {
+    await Book.deleteOne({id: id});
+    return true;
 }
 
 export const validateBook = (book: BookDto) => {
