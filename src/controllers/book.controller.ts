@@ -46,6 +46,26 @@ export const getBook = async (req: Request, res: Response) => {
     res.status(200).json(book);
 }
 
+export const getBookByTitle = async (req: Request, res: Response) => {
+    const title = req.params.title;
+    if (!title || title.trim() === "") {
+        res.status(400).json({error: "Invalid or missing title"});
+        return;
+    }
+    try {
+        const book = await bookService.getBookByTitle(title);
+        if (!book) {
+            res.status(404).json({error: "Book not found"});
+            return;
+        }
+        res.status(200).json(book);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error: "Something went wrong"});
+    }
+};
+
+
 export const updateBook = async (req: Request, res: Response) => {
     const bookId = parseInt(req.params.id);
     if (isNaN(bookId)) {
