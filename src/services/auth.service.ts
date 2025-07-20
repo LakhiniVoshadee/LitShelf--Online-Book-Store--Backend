@@ -1,54 +1,74 @@
-import {User} from "../model/user.model";
+import User from "../model/user.model";
+import { UserDto } from "../dto/user.dto";
 import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET as string // access the secret from the .env file;
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET as string
+const JWT_SECRET = process.env.JWT_SECRET as string;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET as string;
 
-const refreshTokens = new Set<string>
+const refreshTokens = new Set<string>();
 
-const adminUser: User = {
-    id: 1,
-    username: "admin",
-    password: bcrypt.hashSync("1234", 10), // 10 is the salt
-    role: 'admin'
-}
+export const authenticateUser = async (username: string | undefined, password: string): Promise<{ accesstoken: string; refreshtoken: string } | null> => {
+    try {
+        const existingUser = await User.findOne({ username });
 
-const customerUser: User = {
-    id: 2,
-    username: "customer",
-    password: bcrypt.hashSync("12345", 10), // 10 is the salt
-    role: 'customer'
-}
+        if (!existingUser) {
+            return null;
+        }
 
-const userList: User[] = [];
+        const isValidPassword = bcrypt.compareSync(password, existingUser.password);
+        if (!isValidPassword) {
+            return null;
+        }
 
-userList.push(adminUser);
-userList.push(customerUser);
+        const accesstoken = jwt.sign(
+            {
+                id: existingUser.id,
+                username: existingUser.username,
+                role: existingUser.role,
+            },
+            JWT_SECRET,
+            { expiresIn: "5m" }
+        );
 
-export const authenticateUser = (username: string, password: string) => {
+        const refreshtoken = jwt.sign(
+            { username: existingUser.username },
+            REFRESH_TOKEN_SECRET,
+            { expiresIn: "7d" }
+        );
 
-    const existingUser: User | undefined = userList.find(user => user.username === username);
+        refreshTokens.add(refreshtoken);
 
-
-    let isValidPassword = undefined != existingUser && bcrypt.compareSync(password, existingUser?.password);
-    if (!existingUser || !isValidPassword) {
+        return { accesstoken, refreshtoken };
+    } catch (error) {
+        console.error("Error authenticating user:", error);
         return null;
     }
-    const accesstoken = jwt.sign({
-        id: existingUser.id,
-        username: existingUser.username,
-        role: existingUser.role
-    }, JWT_SECRET, {expiresIn: '10s'})
+};
 
-    const refreshtoken = jwt.sign({
-        username: existingUser.username,
-    }, REFRESH_TOKEN_SECRET, {expiresIn: '7d'});
+export const saveUser = async (user: UserDto) => {
+    try {
+        const hashedPassword = bcrypt.hashSync(user.password, 10);
+        const newUser = {
+            ...user,
+            password: hashedPassword,
+        };
+        return await User.create(newUser);
+    } catch (error) {
+        console.error("Error saving user:", error);
+        throw error;
+    }
+};
 
-    refreshTokens.add(refreshtoken);
-
-    return {accesstoken,refreshtoken};
-}
+export const validateUser = (user: UserDto): string | null => {
+    if (!user.id || !user.username || !user.password || !user.role) {
+        return "All fields (id, username, password, role) are required";
+    }
+    if (!["admin", "customer"].includes(user.role)) {
+        return "Role must be either 'admin' or 'customer'";
+    }
+    return null;
+};

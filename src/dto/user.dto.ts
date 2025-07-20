@@ -1,9 +1,8 @@
 export interface UserDto {
     id: number;
-    email: string;
+    username: string;
     password: string;
-    name: string;
-    role: 'user' | 'admin';
-    createdAt: Date;
-    updatedAt: Date;
+    role: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
