@@ -63,6 +63,32 @@ export const saveUser = async (user: UserDto) => {
     }
 };
 
+export const updateUser = async (id: number, data: Partial<UserDto>) => {
+    try {
+        if (data.password) {
+            data.password = bcrypt.hashSync(data.password, 10);
+        }
+        const user = await User.findOneAndUpdate({ id }, data, { new: true });
+        if (!user) {
+            return null;
+        }
+        return user;
+    } catch (error) {
+        console.error("Error updating user:", error);
+        throw error;
+    }
+};
+
+export const deleteUser = async (id: number) => {
+    try {
+        const result = await User.deleteOne({ id });
+        return result.deletedCount > 0;
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        throw error;
+    }
+};
+
 export const validateUser = (user: UserDto): string | null => {
     if (!user.id || !user.username || !user.password || !user.role) {
         return "All fields (id, username, password, role) are required";
