@@ -65,6 +65,25 @@ export const getBookByTitle = async (req: Request, res: Response) => {
     }
 };
 
+export const getBooksByGenre = async (req: Request, res: Response) => {
+    const genre = req.params.genre;
+    if (!genre || genre.trim() === "") {
+        res.status(400).json({ error: "Invalid or missing genre" });
+        return;
+    }
+    try {
+        const books = await bookService.getBooksByGenre(genre);
+        if (!books || books.length === 0) {
+            res.status(404).json({ error: "No books found for this genre" });
+            return;
+        }
+        res.status(200).json(books);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+};
+
 
 export const updateBook = async (req: Request, res: Response) => {
     const bookId = parseInt(req.params.id);

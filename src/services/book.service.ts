@@ -16,6 +16,11 @@ export const getBook = async (id: number): Promise<any> => {
 export const getBookByTitle = async (title: string): Promise<any> => {
     return Book.findOne({title: {$regex: `^${title}$`, $options: 'i'}});
 };
+
+export const getBooksByGenre = async (genre: string): Promise<any> => {
+    return Book.find({ genre: { $regex: genre, $options: 'i' } });
+};
+
 export const updateBook = async (id: number, data: BookDto) => {
 
     const book = await Book.findOneAndUpdate({id: id}, data, {new: true});
