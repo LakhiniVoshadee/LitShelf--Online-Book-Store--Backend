@@ -1,9 +1,0 @@
-export interface ReviewDto {
-    id: number;
-    user: string; // ObjectId as string
-    book: string; // ObjectId as string
-    rating: number;
-    comment: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
