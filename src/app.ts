@@ -3,6 +3,7 @@ import cors from "cors";
 import bookRoutes from "./routes/book.routes";
 import authRoutes from "./routes/auth.routes";
 import {authenticateToken} from "./middleware/auth.middleware";
+import cartRoutes from "./routes/cart.routes";
 
 
 const app: Express = express();
@@ -27,5 +28,6 @@ app.use(cors(corsOptions));
 
 app.use("/api/books", authenticateToken, bookRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/cart", authenticateToken, cartRoutes);
 
 export default app;
