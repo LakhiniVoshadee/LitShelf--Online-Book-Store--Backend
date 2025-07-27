@@ -5,7 +5,7 @@ import authRoutes from "./routes/auth.routes";
 import {authenticateToken} from "./middleware/auth.middleware";
 import cartRoutes from "./routes/cart.routes";
 import orderRoutes from "./routes/order.routes";
-import paymentRoutes from "./routes/payment.routes";
+
 
 
 const app: Express = express();
@@ -32,6 +32,6 @@ app.use("/api/books", authenticateToken, bookRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/cart", authenticateToken, cartRoutes);
 app.use("/api/orders", authenticateToken, orderRoutes);
-app.use("/api/payments", authenticateToken, paymentRoutes);
+
 
 export default app;
