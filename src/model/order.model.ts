@@ -1,51 +1,57 @@
 import mongoose from "mongoose";
 
-const orderModel = new mongoose.Schema(
-    {
-        "id": {
-            required: true,
-            type: Number,
-            unique: true,
-        },
-        "user":{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true,
-        },
-       "books":[
-            {
-               "book":{
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Book',
-                    required: true,
-                },
-               "quantity":{
-                    type: Number,
-                    required: true,
-                },
+const orderSchema = new mongoose.Schema({
+    orderId: {
+        type: Number,
+        required: true,
+        unique: true,
+    },
+    userId: {
+        type: Number,
+        required: true,
+    },
+    items: [
+        {
+            bookId: {
+                type: Number,
+                required: true,
             },
-        ],
-       "totalAmount":{
-            required: true,
-            type: Number,
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1,
+            },
         },
-       "status":{
-            required: true,
-            type: String,
-            enum: ['pending', 'processing', 'shipped', 'delivered'],
-            default: 'pending',
-        },
-       "createdAt":{
-            type: Date,
-            default: Date.now,
-        },
-       "updatedAt":{
-            type: Date,
-            default: Date.now,
-        },
-    }
-);
+    ],
+    totalCost: {
+        type: Number,
+        required: true,
+    },
+    currency: {
+        type: String,
+        required: true,
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'shipped', 'delivered', 'cancelled'],
+        default: 'pending',
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now,
+    },
+});
 
-const Order = mongoose.model('Order', orderModel);
+// Pre-save hook to update the updatedAt timestamp
+orderSchema.pre('save', function (next) {
+    this.updatedAt = new Date();
+    next();
+});
+
+const Order = mongoose.model("Order", orderSchema);
 
 export default Order;
