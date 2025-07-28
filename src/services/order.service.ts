@@ -1,6 +1,7 @@
 import Cart from "../model/cart.model";
 import Book from "../model/book.model";
 import Order from "../model/order.model";
+import { sendOrderConfirmationEmail } from "./email.service";
 
 export const placeOrder = async (userId: number) => {
     try {
@@ -14,7 +15,7 @@ export const placeOrder = async (userId: number) => {
         if (!firstBook) {
             throw new Error(`Book with id ${cart.items[0].bookId} not found`);
         }
-        const currency = firstBook.currency; // Assuming all books have the same currency
+        const currency = firstBook.currency;
 
         for (const item of cart.items) {
             const book = await Book.findOne({ id: item.bookId });
@@ -36,14 +37,17 @@ export const placeOrder = async (userId: number) => {
             items: cart.items,
             totalCost,
             currency,
-            status: 'pending',
+            status: 'pending_payment',
         });
 
         await newOrder.save();
 
         // Clear the cart
-        cart.items.remove({});
+        cart.items.splice(0, cart.items.length);
         await cart.save();
+
+        // Send order confirmation email (non-blocking)
+        await sendOrderConfirmationEmail(userId, newOrder);
 
         return newOrder;
     } catch (error) {
@@ -53,6 +57,7 @@ export const placeOrder = async (userId: number) => {
 };
 
 async function generateUniqueOrderId(): Promise<number> {
-    const lastOrder = await Order.findOne().sort({ orderId: -1 });
-    return lastOrder ? lastOrder.orderId + 1 : 1;
+    const lastOrder = await Order.findOne({}, {}, { sort: { orderId: -1 } });
+    const nextId = lastOrder && lastOrder.orderId ? lastOrder.orderId + 1 : 1;
+    return nextId;
 }
