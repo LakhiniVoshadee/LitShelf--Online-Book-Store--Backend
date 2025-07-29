@@ -7,7 +7,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const app_1 = __importDefault(require("./app"));
 const DBConnection_1 = __importDefault(require("./db/DBConnection"));
 dotenv_1.default.config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 (0, DBConnection_1.default)().then(result => console.log(result));
 app_1.default.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);

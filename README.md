@@ -1,145 +1,107 @@
-# LitShelf — Online Book Store (Backend)
+# LitShelf – Online Bookstore Frontend
 
-Welcome to **LitShelf**, the backend for a modern online book store. This repository contains the API, business logic, and data management needed to power LitShelf's web and mobile clients. Built with scalability, reliability, and clean architecture in mind.
+A modern React + TypeScript + Tailwind CSS frontend for LitShelf, an online bookstore. This application provides robust user and entity management, secure authentication & authorization, admin analytics dashboard, notifications, and optional file upload support.
 
----
+## Features
 
-## 🚀 Features
+- **User Management**: CRUD operations for users (create, read, update, delete).
+- **Entity Management**: CRUD operations for bookstore entities (products/items, customers, orders, payment details).
+- **Authentication & Authorization**: Secure JWT-based authentication. Only authenticated users can access the app, with granular permissions based on user roles.
+- **Admin Dashboard & Analytics**: Admin users can view business analytics and monitor current direction.
+- **Notifications**: Email or push notifications (e.g., payment confirmation emails).
+- **File Uploads** *(Optional)*: Upload files as required by the application.
 
-- **User Authentication & Authorization**  
-  Secure login, registration, and role-based access using JWT or OAuth.
+## Tech Stack
 
-- **Book Catalog Management**  
-  CRUD operations for books, categories, and authors.
+- **React**: UI development
+- **TypeScript**: Type safety
+- **Tailwind CSS**: Styling
+- **JWT**: Authentication & Authorization
+- **Axios/Fetch**: API communication
 
-- **Shopping Cart & Orders**  
-  Add to cart, checkout, order history, and invoice generation.
+## Getting Started
 
-- **Payment Integration**  
-  Plug-and-play payment gateways (e.g., Stripe, PayPal).
+### Prerequisites
 
-- **Reviews & Ratings**  
-  Users can leave ratings and reviews for books.
+- Node.js (>= 18)
+- npm or yarn
 
-- **Admin Dashboard**  
-  Manage inventory, users, orders, and analytics.
+### Installation
 
-- **RESTful API**  
-  Well-documented, versioned endpoints using modern best practices.
-
-- **Error Handling & Logging**  
-  Centralized error management and request logging.
-
----
-
-## 🛠️ Tech Stack
-
-- **Backend Framework:**  
-  (e.g., Node.js with Express)
-
-- **Database:**  
-  (e.g.,  MongoDB )
-
-- **Authentication:**  
-  JWT, OAuth2
-
-- **Other:**  
-  Docker, Swagger/OpenAPI, CI/CD with GitHub Actions
-
----
-
-## 📦 Installation
-
-1. **Clone the repo:**
-   ```bash
-   git clone https://github.com/LakhiniVoshadee/LitShelf--Online-Book-Store--Backend.git
-   cd LitShelf--Online-Book-Store--Backend
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   # Example for Node.js
-   npm install
-   ```
-
-3. **Configure environment:**
-   - Copy `.env.example` to `.env`
-   - Fill in all required environment variables (DB credentials, secrets, etc.)
-
-4. **Run migrations & seed data:**
-   ```bash
-   # Example
-   npm run migrate
-   npm run seed
-   ```
-
-5. **Start the server:**
-   ```bash
-   npm start
-   # or for development
-   npm run dev
-   ```
-
----
-
-## 🧑‍💻 API Documentation
-
-API docs are provided via [Swagger UI](http://localhost:PORT/api-docs) after running the server.  
-See [`docs/`](docs/) for further documentation and usage examples.
-
----
-
-## 🏗️ Project Structure
-
-```
-LitShelf--Online-Book-Store--Backend/
-├── src/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   ├── middlewares/
-│   └── utils/
-├── tests/
-├── docs/
-├── .env.example
-└── README.md
-```
-
----
-
-## 🧪 Testing
-
-Run tests with:
 ```bash
-npm test
+git clone https://github.com/LakhiniVoshadee/LitShelf--Online-BookStore--Frontend.git
+cd LitShelf--Online-BookStore--Frontend/lit-shelf-front
+npm install
 ```
-Or your stack’s equivalent.
+
+### Configuration
+
+Edit environment variables in `.env` for API endpoints, JWT secret, email configuration, etc.
+
+### Running the App
+
+```bash
+npm start
+# or
+yarn start
+```
+
+## Folder Structure
+
+```
+lit-shelf-front/
+ ├── src/
+ │   ├── components/        # Reusable UI components
+ │   ├── pages/             # Route-based pages (Home, Login, Dashboard, etc.)
+ │   ├── services/          # API services (users, entities, auth)
+ │   ├── hooks/             # Custom React hooks
+ │   ├── utils/             # Utility functions
+ │   ├── types/             # TypeScript types/interfaces
+ │   └── App.tsx
+ ├── public/
+ └── tailwind.config.js
+```
+
+## Key Modules
+
+### Authentication & Authorization
+
+- JWT stored in httpOnly cookies or localStorage.
+- Role-based access: Admin, Customer, etc.
+- Protected routes using custom hooks (e.g., `useAuth`).
+
+### User & Entity Management
+
+- CRUD screens for users, products/items, customers, orders, payments.
+- API integration for backend operations.
+
+### Admin Dashboard
+
+- View business metrics, sales analytics, user statistics.
+- Responsive charts and tables.
+
+### Notifications
+
+- Email confirmation for payments.
+- Push notifications (optional, if supported).
+
+### File Uploads *(Optional)*
+
+- Upload product images, documents, etc.
+- Preview & validation.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some feature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
 
 ---
 
-## 📄 Contributing
-
-Contributions are welcome!  
-Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
----
-
-## 📝 License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## ✨ Acknowledgements
-
-- [Express](https://expressjs.com/) (or your backend framework)
-- [PostgreSQL](https://www.postgresql.org/) / [MongoDB](https://www.mongodb.com/)
-- [Swagger](https://swagger.io/)
-- And all contributors!
-
----
-
-## 📫 Contact
-
-For questions, open an [issue](https://github.com/LakhiniVoshadee/LitShelf--Online-Book-Store--Backend/issues) or email [LakhiniVoshadee](mailto:your-email@example.com).
+**Contact:** [LakhiniVoshadee](https://github.com/LakhiniVoshadee)
