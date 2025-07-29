@@ -14,13 +14,13 @@ export const mailSender = async (userModel:User) =>{
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: (process.env.E_MAIL),
-                pass: (process.env.PASSWORD)
+                user: (process.env.EMAIL_USER),
+                pass: (process.env.EMAIL_PASS)
             }
         })
 
         const mailOptions = {
-            from: (process.env.E_MAIL),
+            from: (process.env.EMAIL_USER),
             to: ToEmail,
             subject: 'Verification Code',
             text: `Your verification code is ${userModel.verificationCode}`
@@ -59,13 +59,13 @@ export const mailReceipt = async (receiptModel: Receipt) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.E_MAIL,
-                pass: process.env.PASSWORD
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
             }
         });
 
         const mailOptions = {
-            from: process.env.E_MAIL,
+            from: process.env.EMAIL_USER,
             to: ToEmail,
             subject: `Library Receipt - ${referenceId}`,
             html: `
@@ -215,8 +215,8 @@ export const mailReceipt = async (receiptModel: Receipt) => {
 };
 
 export const overdueEmail = async (receiptModel: Receipt) => {
-   console.log("EMAIL_USER:",process.env.E_MAIL ? "OK" : "MISSING");
-   console.log("EMAIL_PASS:", process.env.PASSWORD ? "OK" : "MISSING");
+   console.log("EMAIL_USER:",process.env.EMAIL_USER ? "OK" : "MISSING");
+   console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "OK" : "MISSING");
 
   
     console.log(receiptModel);
@@ -233,13 +233,13 @@ export const overdueEmail = async (receiptModel: Receipt) => {
     const transporter =nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.E_MAIL,
-            pass: process.env.PASSWORD
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     })
 
     const mailOptions = {
-        from: process.env.E_MAIL,
+        from: process.env.EMAIL_USER,
         to: ToEmail,
         subject: `Overdue Notice - ${referenceId}`,
         html: `
