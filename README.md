@@ -1,23 +1,25 @@
-# LitShelf – Online Bookstore Frontend
+# LitShelf – Online Bookstore Backend
 
-A modern React + TypeScript + Tailwind CSS frontend for LitShelf, an online bookstore. This application provides robust user and entity management, secure authentication & authorization, admin analytics dashboard, notifications, and optional file upload support.
+A robust Node.js + Express + TypeScript backend for LitShelf, an online bookstore. This application powers user and entity management, secure authentication & authorization, admin analytics, notifications, and optional file upload support, all backed by MongoDB.
 
 ## Features
 
 - **User Management**: CRUD operations for users (create, read, update, delete).
 - **Entity Management**: CRUD operations for bookstore entities (products/items, customers, orders, payment details).
-- **Authentication & Authorization**: Secure JWT-based authentication. Only authenticated users can access the app, with granular permissions based on user roles.
-- **Admin Dashboard & Analytics**: Admin users can view business analytics and monitor current direction.
+- **Authentication & Authorization**: Secure JWT-based authentication. Only authenticated users can access the API, with granular permissions based on user roles.
+- **Admin Dashboard & Analytics**: Endpoints for business analytics and monitoring.
 - **Notifications**: Email or push notifications (e.g., payment confirmation emails).
-- **File Uploads** *(Optional)*: Upload files as required by the application.
+- **File Uploads** *(Optional)*: API support for uploading files (product images, documents, etc.).
 
 ## Tech Stack
 
-- **React**: UI development
+- **Node.js**: Backend runtime
+- **Express**: RESTful API framework
 - **TypeScript**: Type safety
-- **Tailwind CSS**: Styling
+- **MongoDB**: NoSQL database
 - **JWT**: Authentication & Authorization
-- **Axios/Fetch**: API communication
+- **Nodemailer / Push Services**: Notifications
+- **Multer**: File uploads
 
 ## Getting Started
 
@@ -25,70 +27,77 @@ A modern React + TypeScript + Tailwind CSS frontend for LitShelf, an online book
 
 - Node.js (>= 18)
 - npm or yarn
+- MongoDB instance (local or cloud)
 
 ### Installation
 
 ```bash
-git clone https://github.com/LakhiniVoshadee/LitShelf--Online-BookStore--Frontend.git
-cd LitShelf--Online-BookStore--Frontend/lit-shelf-front
+git clone https://github.com/LakhiniVoshadee/LitShelf--Online-BookStore--Backend.git
+cd LitShelf--Online-BookStore--Backend
 npm install
 ```
 
 ### Configuration
 
-Edit environment variables in `.env` for API endpoints, JWT secret, email configuration, etc.
+Edit environment variables in `.env` for:
+
+- `MONGO_URI`
+- `JWT_SECRET`
+- Email service credentials
+- Other relevant settings
 
 ### Running the App
 
 ```bash
-npm start
+npm run dev
 # or
-yarn start
+yarn dev
 ```
 
 ## Folder Structure
 
 ```
-lit-shelf-front/
+LitShelf--Online-BookStore--Backend/
  ├── src/
- │   ├── components/        # Reusable UI components
- │   ├── pages/             # Route-based pages (Home, Login, Dashboard, etc.)
- │   ├── services/          # API services (users, entities, auth)
- │   ├── hooks/             # Custom React hooks
+ │   ├── controllers/       # Route handlers for users, products, orders, etc.
+ │   ├── models/            # Mongoose models for MongoDB
+ │   ├── routes/            # Express route definitions
+ │   ├── middleware/        # JWT auth, error handling, role checks, etc.
+ │   ├── services/          # Business logic, email, notifications, analytics
  │   ├── utils/             # Utility functions
  │   ├── types/             # TypeScript types/interfaces
- │   └── App.tsx
- ├── public/
- └── tailwind.config.js
+ │   └── app.ts             # Express app entry
+ ├── uploads/               # Uploaded files (if enabled)
+ ├── .env                   # Environment variables
+ └── package.json
 ```
 
 ## Key Modules
 
 ### Authentication & Authorization
 
-- JWT stored in httpOnly cookies or localStorage.
+- JWT issued on login, verified in protected routes.
 - Role-based access: Admin, Customer, etc.
-- Protected routes using custom hooks (e.g., `useAuth`).
+- Middleware for authorization.
 
 ### User & Entity Management
 
-- CRUD screens for users, products/items, customers, orders, payments.
-- API integration for backend operations.
+- RESTful endpoints for users, products/items, customers, orders, payments.
+- MongoDB for persistent storage.
 
-### Admin Dashboard
+### Admin Analytics
 
-- View business metrics, sales analytics, user statistics.
-- Responsive charts and tables.
+- Endpoints for business metrics, sales analytics, user statistics.
 
 ### Notifications
 
-- Email confirmation for payments.
-- Push notifications (optional, if supported).
+- Nodemailer integration for email confirmations (e.g., payment success).
+- Support for push notifications (optional).
 
 ### File Uploads *(Optional)*
 
-- Upload product images, documents, etc.
-- Preview & validation.
+- Multer middleware for handling uploads.
+- Validation and storage.
 
 ## Contributing
 

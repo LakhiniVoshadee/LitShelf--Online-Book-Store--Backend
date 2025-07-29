@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const bookManagement_1 = require("../controller/bookManagement");
+const authenticate_1 = require("../middleware/authenticate");
+const bookBorrowRoute = (0, express_1.Router)();
+bookBorrowRoute.post('/saveBorrowBook', authenticate_1.authenticate, bookManagement_1.addBookBorrow);
+bookBorrowRoute.get('/getAll', authenticate_1.authenticate, bookManagement_1.getAll);
+bookBorrowRoute.post('/updateBorrowBook', authenticate_1.authenticate, bookManagement_1.updateBookBorrow);
+bookBorrowRoute.post('/overDueBorrowBook', authenticate_1.authenticate, bookManagement_1.overDueSendEmail);
+exports.default = bookBorrowRoute;
