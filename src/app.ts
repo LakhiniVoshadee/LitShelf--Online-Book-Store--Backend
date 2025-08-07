@@ -5,8 +5,7 @@ import authRoutes from "./routes/auth.routes";
 import {authenticateToken} from "./middleware/auth.middleware";
 import cartRoutes from "./routes/cart.routes";
 import orderRoutes from "./routes/order.routes";
-
-
+import { errorHandler, notFoundHandler } from "./middleware/error.middleware";
 
 const app: Express = express();
 
@@ -28,10 +27,14 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
+// API Routes
 app.use("/api/books", authenticateToken, bookRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/cart", authenticateToken, cartRoutes);
 app.use("/api/orders", authenticateToken, orderRoutes);
 
+// Error handling middleware
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 export default app;
