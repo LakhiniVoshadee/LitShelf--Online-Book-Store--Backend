@@ -98,3 +98,26 @@ export const validateUser = (user: UserDto): string | null => {
     }
     return null;
 };
+
+export const getAllCustomers = async () => {
+    try {
+        const customers = await User.find({ role: 'customer' }).select('id username role createdAt updatedAt');
+        return customers;
+    } catch (error) {
+        console.error("Error fetching customers:", error);
+        throw error;
+    }
+};
+
+export const getCustomerByName = async (name: string) => {
+    try {
+        const customers = await User.find({
+            role: 'customer',
+            username: { $regex: name, $options: 'i' }
+        }).select('id username role createdAt updatedAt');
+        return customers;
+    } catch (error) {
+        console.error("Error fetching customer by name:", error);
+        throw error;
+    }
+};

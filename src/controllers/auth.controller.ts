@@ -81,3 +81,28 @@ export const deleteUser = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Something went wrong" });
     }
 };
+
+export const getAllCustomers = async (req: Request, res: Response) => {
+    try {
+        const customers = await authService.getAllCustomers();
+        res.status(200).json(customers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+};
+
+export const getCustomerByName = async (req: Request, res: Response) => {
+    const { name } = req.query;
+    if (!name || typeof name !== 'string') {
+        return res.status(400).json({ error: "Name query parameter is required" });
+    }
+
+    try {
+        const customers = await authService.getCustomerByName(name);
+        res.status(200).json(customers);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Something went wrong" });
+    }
+};
